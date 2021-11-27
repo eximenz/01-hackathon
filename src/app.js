@@ -1,3 +1,7 @@
 import './styles.css'
 
-console.log('test console app')
+import {ContextMenu} from 'menu'
+
+
+const menu= new ContextMenu('.menu')
+menu.run()
