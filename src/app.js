@@ -1,11 +1,11 @@
 import "./styles.css";
 import { ContextMenu } from "./menu";
 import { BackgroundModule } from "./modules/background.module";
-import { GameOfLife } from "./modules/gol";
+import { GameOfLife } from "./modules/gol.module";
 import { RandomSound } from "./modules/randomSound.module";
 import { GuessNumber } from "./modules/guessNumber.module";
 import { MemoryGame } from "./modules/memoryGame.module";
-import { ImgModule } from './modules/img.module';
+import { ImgModule } from "./modules/img.module";
 
 // Инициализируем ContextMenu
 const contextMenu = new ContextMenu("#menu");
@@ -25,7 +25,7 @@ const bgModule = new BackgroundModule("Background", "Случайная смен
 const randomSound = new RandomSound("Sounds", "Случайные звуки");
 const guessNumber = new GuessNumber("numbers", "Отгадай число");
 const memoryGame = new MemoryGame("Memory", "Игра на память");
-const imgModule = new ImgModule('imgModule', "Получи дозу радости");
+const imgModule = new ImgModule("imgModule", "Получи дозу радости");
 
 
 // добавляем модуль в контекстное меню

@@ -3,8 +3,8 @@ import { random } from "../utils";
 
 export class ImgModule extends Module {
 
-  imgArray = ['https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Smiley_icon.svg/340px-Smiley_icon.svg.png',
-  'https://cdn.pixabay.com/photo/2016/09/01/08/25/smiley-1635463__340.png',
+  imgArray = ["https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Smiley_icon.svg/340px-Smiley_icon.svg.png",
+  "https://cdn.pixabay.com/photo/2016/09/01/08/25/smiley-1635463__340.png",
   ];
 
   constructor(type, text) {
@@ -16,13 +16,13 @@ export class ImgModule extends Module {
 
     const createSmile = (url) => {
 
-      const randomDiv = document.createElement('div');
+      const randomDiv = document.createElement("div");
       randomDiv.style.top = `${random(0, document.body.scrollHeight)}px`;
       randomDiv.style.left = `${random(0, document.body.scrollWidth)}px`;
       randomDiv.style.position = "absolute";
       document.body.append(randomDiv);
 
-      const img = document.createElement('img');
+      const img = document.createElement("img");
       img.src = url;
       img.style.width = `${random(15, 40)}px`;
       randomDiv.append(img);
@@ -30,12 +30,12 @@ export class ImgModule extends Module {
       return randomDiv;
     }
 
-    const moduleDiv = document.querySelector('.module-container');
+    const moduleDiv = document.querySelector(".module-container");
 
     let timer;
 
     do {
-      timer = prompt('Сколько секунд радости хотите?', 'Введите число от 1 до 5');
+      timer = prompt("Сколько секунд радости хотите?", "Введите число от 1 до 5");
     } while (timer < 1 || timer > 5 || !isFinite(timer));
 
     this.imgArray.forEach(smile => {
