@@ -21,6 +21,8 @@ body {
     background: #1b1a1a;
     border-radius: 5px;
     display: none;
+    opacity:0;
+    transition:transform 0.5s ease 0s, opacity 0.8s ease 0.2s;
     list-style: none;
 }
 
