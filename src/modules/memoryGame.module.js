@@ -134,7 +134,7 @@ export class MemoryGame extends Module {
 
     (function shuffle() {
       cards.forEach((card) => {
-        let randomPos = Math.floor(Math.random() * 12);
+        let randomPos = random(0, 12);
         card.style.order = randomPos;
       });
     })();
