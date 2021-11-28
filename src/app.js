@@ -7,16 +7,17 @@ import { GuessNumber } from "./modules/guessNumber.module";
 
 // Инициализируем ContextMenu
 const contextMenu = new ContextMenu("#menu");
-// const container = document.querySelector(".module-container");
 
 // добавляем слушатели для вызова контекстного меню и его закрытия
 document.body.addEventListener("contextmenu", (event) => {
   contextMenu.open(event);
 });
+
 document.body.addEventListener("click", (event) => {
   contextMenu.close(event);
 });
 
+// создаем инстансы модулей
 const gameOfLife = new GameOfLife("Game of Life", "Let's watch and relax!");
 const bgModule = new BackgroundModule(
   "Background",
