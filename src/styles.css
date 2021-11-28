@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
 
+:root {
+    --primary-color: #4666B1;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +16,34 @@ body {
     height: 100vh;
     width: 100%;
     padding: 2rem;
+
+    /*background-image: url('./assets/js.png');
+    background-size: 80% 80%;
+    background-position: center center;
+    background-repeat: no-repeat;*/
+    transition: background-color 3s ease-in;
+}
+
+.click_container {
+    position: absolute;
+
+    justify-content: center;
+    text-align:right;
+
+    background-color: var(--primary-color);
+    padding: 5px;
+
+    height: auto;
+    width: 28%;
+
+    right: 15px;
+    top:10%;
+
+    overflow: hidden;
+}
+
+.click_container *::selection {
+    background-color: transperent;
 }
 
 .menu {
@@ -22,12 +54,14 @@ body {
     border-radius: 5px;
     display: none;
     opacity:0;
-    transition:transform 0.5s ease 0s, opacity 0.8s ease 0.2s;
+    transition:transform 0.5s ease-out 0s, opacity 0.8s ease-in-out 0.2s;
     list-style: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.85);
 }
 
 .menu.open {
     display: block;
+
 }
 
 .menu .menu-item {
@@ -42,3 +76,111 @@ body {
 .menu .menu-item:hover {
     background: #343434;
 }
+
+.menu .menu-item::selection {
+    background-color: transparent;
+  }
+
+  @keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.dlg-modal {
+	width: 100%;
+	max-width: 570px;
+	height: 300px;
+	opacity: 0;
+	visibility: hidden;
+	text-align: center;
+	position: fixed;
+	left: 50%;
+	z-index: 10;
+	padding: 35px 36px;
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0,0,0,0.85);
+}
+.dlg-modal-fade {
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+.dlg-modal-slide {
+	top: -20px;
+	transform: translate(-50%, -100%);
+	visibility: visible;
+	opacity: 1;
+}
+ 
+.fadeIn, .fadeOut, .slideInDown, .slideOutUp {
+	animation-duration: 0.4s;
+	animation-timing-function: linear;
+}
+ 
+@keyframes fadeIn { 
+	from {
+		opacity: 0;
+		visibility: hidden;
+	}
+	to { 
+		opacity:1;
+		visibility: visible; 
+	}
+}
+.fadeIn {
+	animation-name: fadeIn;
+	opacity: 1;
+	visibility: visible;
+}
+ 
+@keyframes fadeOut { 
+	from {
+		opacity: 1;
+		visibility: visible;
+	}
+	to {
+		opacity:0;
+		visibility: hidden;
+	}
+}
+.fadeOut {
+	animation-name: fadeOut;
+	opacity: 0;
+	visibility: hidden;
+}
+ 
+@keyframes slideInDown { 
+	from {
+		top: -20px;
+		transform: translate(-50%, -100%);
+	}
+	to {
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+.slideInDown {
+	animation-name: slideInDown;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+ 
+@keyframes slideOutUp { 
+	from {
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+	to {
+		top: -20px;
+		transform: translate(-50%, -100%);
+	}
+}
+.slideOutUp { animation-name: slideOutUp; }
