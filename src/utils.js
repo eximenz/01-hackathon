@@ -62,8 +62,8 @@ function getNeighborCount(currGen, row, col) {
     }
     return count
 }
-export function createNextGen(currGen, blankGen) {
-    const nextGen = blankGen
+export function createNextGen(currGen) {
+    const nextGen = createInitialGeneration()
     currGen.forEach((row, roi) => {
         row.forEach((col, coi) => {
             const neighbors = getNeighborCount(currGen, roi, coi)

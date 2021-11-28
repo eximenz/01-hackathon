@@ -21,7 +21,7 @@ document.body.addEventListener("click", (event) => {
 const gameOfLife = new GameOfLife("Game of Life", "Let's watch and relax!");
 const bgModule = new BackgroundModule(
   "Background",
-  "Generate random background"  
+  "Generate random background"
 );
 const randomSound = new RandomSound("Sounds", "Random Sounds");
 // const clicksModule = new ClicksModule("Clicks", "Generate clicks");
