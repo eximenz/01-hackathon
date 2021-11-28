@@ -20,10 +20,7 @@ document.body.addEventListener("click", (event) => {
 
 // создаем инстансы модулей
 const gameOfLife = new GameOfLife("Game of Life", "Жизнь бактерий");
-const bgModule = new BackgroundModule(
-  "Background",
-  "Generate random background"
-);
+const bgModule = new BackgroundModule("Background", "Случайная смена фона");
 const randomSound = new RandomSound("Sounds", "Случайные звуки");
 const guessNumber = new GuessNumber("numbers", "Отгадай число");
 const memoryGame = new MemoryGame("Memory", "Игра на память");
