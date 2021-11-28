@@ -1,21 +1,30 @@
-import './styles.css'
-import {ContextMenu} from './menu';
-import { BackgroundModule } from './modules/background.module';
-import { RandomSound } from './modules/randomSound.module';
+import "./styles.css";
+import { ContextMenu } from "./menu";
+import { BackgroundModule } from "./modules/background.module";
+import { GameOfLife } from "./modules/gol";
+import { RandomSound } from "./modules/randomSound.module";
 
+// Инициализируем ContextMenu
+const contextMenu = new ContextMenu("#menu");
 
-const contextMenu = new ContextMenu('.menu');
-
-document.body.addEventListener('contextmenu', event => {
-	contextMenu.open(event);
-})
+// добавляем слушатели для вызова контекстного меню и его закрытия
+document.body.addEventListener("contextmenu", (event) => {
+  contextMenu.open(event);
+});
 
 document.body.addEventListener("click", (event) => {
   contextMenu.close(event);
 });
 
-const backgroundModule = new BackgroundModule('background', 'To generate random background');
-contextMenu.add(backgroundModule);
+// создаем инстансы модулей
+const gameOfLife = new GameOfLife("Game of Life", "Let's watch and relax!");
+const bgModule = new BackgroundModule(
+  "Background",
+  "Generate random background"
+);
+const randomSound = new RandomSound("Sounds", "Random Sounds");
 
-const randomSound = new RandomSound('randomSound', 'To generate random sound');
+// добавляем модуль в контекстное меню
+contextMenu.add(gameOfLife);
+contextMenu.add(bgModule);
 contextMenu.add(randomSound);
