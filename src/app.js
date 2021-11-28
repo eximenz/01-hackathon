@@ -4,6 +4,7 @@ import { BackgroundModule } from "./modules/background.module";
 import { GameOfLife } from "./modules/gol";
 import { RandomSound } from "./modules/randomSound.module";
 import { GuessNumber } from "./modules/guessNumber.module";
+import { ImgModule } from './modules/img.module';
 
 // Инициализируем ContextMenu
 const contextMenu = new ContextMenu("#menu");
@@ -25,9 +26,12 @@ const bgModule = new BackgroundModule(
 );
 const randomSound = new RandomSound("Sounds", "Random Sounds");
 const guessNumber = new GuessNumber("numbers", "Отгадай число");
+const imgModule = new ImgModule('imgModule', 'To generate image');
 
 // добавляем модуль в контекстное меню
 contextMenu.add(gameOfLife);
 contextMenu.add(bgModule);
 contextMenu.add(randomSound);
 contextMenu.add(guessNumber);
+contextMenu.add(imgModule);
+
