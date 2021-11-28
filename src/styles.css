@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap");
 
 * {
-  /* margin: 0;
-  padding: 0; */
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -13,6 +13,7 @@ body {
   width: 100%;
   padding: 2rem;
   animation: gradient 15s ease infinite;
+  display: flex;
 }
 
 /* Context Menu styles */
@@ -43,6 +44,10 @@ body {
 
 .menu .menu-item:hover {
   background: #343434;
+}
+
+.module-container {
+  margin: auto;
 }
 
 /* Game of Life Module styles */
@@ -132,4 +137,62 @@ td.alive {
 
 .prompt::before {
   content: "> ";
+}
+
+/* MemoryGame Module styles */
+.memory-game {
+  height: 100vh;
+  display: flex;
+  background: #818181;
+}
+
+.memory-game {
+  width: 640px;
+  height: 640px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  perspective: 1000px;
+  align-items: center;
+  justify-content: center;
+}
+
+.memory-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.memory-card {
+  width: calc(25% - 10px);
+  height: calc(25% - 10px);
+  margin: 5px;
+  position: relative;
+  transform: scale(1);
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.memory-card:active {
+  transform: scale(0.97);
+  transition: transform 0.2s;
+}
+
+.memory-card.flip {
+  transform: rotateY(180deg);
+}
+
+.front-face,
+.back-face {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  position: absolute;
+  border-radius: 5px;
+  background: #dadada;
+  backface-visibility: hidden;
+}
+
+.front-face {
+  transform: rotateY(180deg);
 }
