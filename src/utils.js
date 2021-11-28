@@ -3,7 +3,6 @@ import {golGrit} from './constants'
 export function random(min, max) {
   return Math.round(min - 0.5 + Math.random() * (max - min + 1))
 }
-
 export function createInitialGeneration() {
     const generation = []
     for (let i = 0; i < golGrit.rows; i++) {
