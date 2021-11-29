@@ -1,5 +1,7 @@
 # Hackaton #1
 
+https://eximenz.github.io/01-hackaton/ - сайт проекта
+
 Данный проект "Контекстное меню" был выполнен в рамках первого марафона по JavaScript в курсе Junior FrontEnd Developer.
 
 Сроки выполнения задания: 2 дня.
