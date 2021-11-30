@@ -13,27 +13,33 @@ export class ClicksModule extends Module {
 
         this.state= {
           clicks:0,
-          commonClick:0,
+          winClicks:0,
           seconds:20,
           mtimer:0,
+          isModalDialog:false,
           isRunning: false 
        }
 
-
+        this.message_container=null
+        
         this.type = type
         this.text = text
       }
 
       reset() {
-       // if (document.querySelector('.click_container'))
-        document.querySelector('.click_container').remove() 
+       // if (document.querySelector('.message_container'))
+        this.message_container.remove() 
         document.body.onclick=null
 
         if (this.state.mtimer!=0) clearTimeout(this.state.mtimer)
-        this.state.mtimer=0
-        this.state.clicks=0
-        this.state.seconds=20
-        this.state.isRunning=false
+        this.state= {
+          clicks:0,
+          winClicks:0,
+          seconds:20,
+          mtimer:0,
+          isModalDialog:false,
+          isRunning: false 
+       }
       }
 
 
@@ -44,12 +50,14 @@ export class ClicksModule extends Module {
         if (!this.state.isRunning) {
 
           this.state.isRunning=true
-          document.body.insertAdjacentHTML('beforeend', `<div class='click_container'><h2>Пользователь нажал на мышь: ${this.state.clicks} раз </h2>
+          document.body.insertAdjacentHTML('beforeend', `<div class='message_container'><h2>Пользователь нажал на мышь: ${this.state.clicks} раз </h2>
                                                                                       <h2>Время для подсчета кликов: ${this.state.seconds} сек</h2></div>`)
+          this.message_container=document.body.querySelector('.message_container')
+
           document.body.onclick= (event)=>{
-            if (document.querySelector('.click_container') && this.state.isRunning) {
-               document.querySelector('.click_container').firstChild.textContent=`Пользователь нажал на мышь: ${this.state.clicks} раз`
-               document.querySelector('.click_container').lastChild.textContent=`Время для подсчета кликов: ${this.state.seconds} сек`
+            if (this.message_container && this.state.isRunning) {
+               this.message_container.firstChild.textContent=`Пользователь нажал на мышь: ${this.state.clicks} раз`
+               this.message_container.lastChild.textContent=`Время для подсчета кликов: ${this.state.seconds} сек`
                this.state.clicks+=1
             }
           }
@@ -57,16 +65,16 @@ export class ClicksModule extends Module {
           if (this.state.mtimer===0 && this.state.isRunning) 
           this.state.mtimer=setInterval(()=>{
             this.state.seconds-=1
-            if (document.querySelector('.click_container')) {
-               document.querySelector('.click_container').firstChild.textContent=`Пользователь нажал на мышь: ${this.state.clicks} раз`
-               document.querySelector('.click_container').lastChild.textContent=`Время для подсчета кликов: ${this.state.seconds} сек`
+            if (this.message_container) {
+               this.message_container.firstChild.textContent=`Пользователь нажал на мышь: ${this.state.clicks} раз`
+               this.message_container.lastChild.textContent=`Время для подсчета кликов: ${this.state.seconds} сек`
             }
             if (this.state.seconds<1) {
               this.state.isRunning=false
               clearTimeout(this.state.mtimer)
               this.state.mtimer=0
 
-              if (this.state.commonClick<this.state.clicks && this.state.commonClick>0)
+              if (this.state.winClicks<this.state.clicks && this.state.winClicks>0)
                  user_message=`Поздавляю, вы установили новый рекорд модуля: <i><b>${this.state.clicks}</b></i> кликов.`
               else if (this.state.clicks<=50)
                  user_message=`Поздравляю, вы справились с заданием. <br/>`
@@ -75,9 +83,9 @@ export class ClicksModule extends Module {
               else
                  user_message=`Поздавляю, вы завершили задание модуля с ошеломляющими результатами.`
 
-              console.log(this.state.commonClick,this.state.clicks)
+              console.log(this.state.winClicks,this.state.clicks, this.state.winClicks>=this.state.clicks || this.state.winClicks===0)
 
-              if (this.state.commonClick>=this.state.clicks || this.state.commonClick===0)
+              if (this.state.winClicks>=this.state.clicks || this.state.winClicks===0)
               // Запускаем всплыющее окно сообщений с уведомлением о завершении работы модуля CLICKS
                    popup.openPopup({ left:'',
                                      top:'80%',
@@ -91,7 +99,8 @@ export class ClicksModule extends Module {
                                                    В будущем вы сможете улучшить свои результаты и поставить новый рекорд!`
 
                                   },1)
-              else 
+              else {
+                  this.state.isModalDialog=true
                   // Запускаем всплыющее окно сообщений с уведомлением о завершении работы модуля CLICKS
                   popup.openModal({ right:'',
                                     top:'50%',
@@ -103,9 +112,9 @@ export class ClicksModule extends Module {
                                     textMessage: `${user_message}
                                                   При должном старании позже вы сможете улучшить свои результаты и поставить новый рекорд!`
 
-                },1)              
+                }, function(){this.state.isModalDialog=false; this.state.winClicks=this.state.clicks}.bind(this))              
+              }
                
-              if (this.state.clicks>this.state.commonClick) this.state.commonClick=this.state.clicks
               this.state.clicks=0
             }
           },1000)

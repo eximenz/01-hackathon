@@ -21,10 +21,10 @@ body {
     background-size: 80% 80%;
     background-position: center center;
     background-repeat: no-repeat;*/
-    transition: background-color 3s ease-in;
+    transition: background-color 3s ease-out;
 }
 
-.click_container {
+.message_container {
     position: absolute;
 
     justify-content: center;
@@ -43,7 +43,7 @@ body {
     overflow: hidden;
 }
 
-.click_container >*::selection {
+.message_container >*::selection {
     background-color: transparent;
 }
 

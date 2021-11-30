@@ -8,7 +8,8 @@ export class DialogMessage {
         isPopup: false,
         isOpen:false,
         step:0,
-        direction: 1
+        direction: 1,
+        runOnClose:null
       }
 
       this.buttonClose=buttonClose
@@ -20,7 +21,7 @@ export class DialogMessage {
             <div class="popup">
                 <h2>Модальное Окно!</h2>
                 <p>Здесь необходимо указать текст, выводимый в окне.</p>
-                <button class="close" title="Закрыть" onclick="document.getElementById('overlay').style.display='none';"></button>
+                <button class="close" title="Закрыть"></button>
             </div>
         </div>`)
         document.body.querySelector('#overlay').style.display='none'
@@ -28,15 +29,18 @@ export class DialogMessage {
         this.popup=document.body.querySelector('.popup')
         this.close=document.body.querySelector('.popup .close')
 
-        this.popup.addEventListener('transitionend', (e)=> {console.log(e, 'First transition is ended');this.transitionPopup()})
-        this.close.addEventListener('click', (e)=>{this.closeDialog()})
+        this.popup.addEventListener('transitionend', (e)=> {this.transitionPopup()})
+        this.close.addEventListener('click', (e)=>{this.closeDialog()
+                                                   if (this.state.runOnClose) this.state.runOnClose()
+                                                  })
       }
 
     }
 
-    openModal(settings){
+    openModal(settings, reset_func){
 
      [this.state.isModal,this.state.isOpen]=[true, true]
+     if (reset_func) this.state.runOnClose=reset_func
 
      document.body.querySelector('#overlay').style.background='rgba(0, 0, 0, 0.65)'
      document.body.querySelector('#overlay').style.opacity=1
@@ -75,7 +79,7 @@ export class DialogMessage {
     }
  
     closeDialog() {
-        console.log('Popup is closing', this)
+        console.log('Dialog is closing', this)
         if (this.state.isOpen) this.buttonClose()
     }
 

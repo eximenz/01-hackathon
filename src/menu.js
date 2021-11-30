@@ -32,9 +32,12 @@ export class ContextMenu extends Menu {
         event.preventDefault()
 
         let [newTop, newLeft]=[0,0]
-        
+        if (this.activeModule) console.log('Текущее окно модально',this.activeModule.state.isModalDialog)
+
         console.log('Contextmenu clicked', event.target.offsetParent,event.target)
-        if (event.target.offsetParent !== this.el && !this.state.isOpening) {
+        if (event.target.offsetParent !== this.el && !this.state.isOpening && 
+            (this.activeModule && this.activeModule.state && !this.activeModule.state.isModalDialog ||
+             !this.activeModule)) {
           this.close()
 
            if (event.pageY+this.state.height>document.body.clientHeight)
