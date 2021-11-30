@@ -35,7 +35,7 @@ export class BackgroundModule extends Module {
         this.state.isRunning=false
       }
 
-      trigger() {
+      trigger(popup) {
 
         let new_bgelem=-1
         console.log('State of BG module',this.state.isRunning)

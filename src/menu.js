@@ -1,4 +1,5 @@
 import {Menu} from './core/menu'
+import {DialogMessage} from './popup'
 
 
 export class ContextMenu extends Menu {
@@ -8,6 +9,7 @@ export class ContextMenu extends Menu {
 
      this.el = document.querySelector(selector)
      this.activeModule=null
+     this.messageDialog=new DialogMessage()
 
      this.state={ 
                   width:150,
@@ -100,7 +102,7 @@ export class ContextMenu extends Menu {
             setTimeout(()=>{ 
                              if (this.activeModule && this.activeModule.reset) this.activeModule.reset()
                              this.activeModule=module
-                             module.trigger()
+                             module.trigger(this.messageDialog)
                            },0)
 
           }.bind(this)
