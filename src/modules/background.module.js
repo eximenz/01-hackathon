@@ -3,8 +3,7 @@ import * as Utils from '../utils'
 
 export class BackgroundModule extends Module {
 
-    #bgcolors=["#0099cc","#c0c0c0","#587b2e","#990000","#000000","#1C8200","#987baa","#981890","#AA8971","#1987FC","#99081E"]
-    #iteration=0
+    #bgcolors=[]
     //['yellow','lime','aqua','fuchsia','red','green',
     //           'blue','purple','maroon','olive','navy','teal']
 
@@ -23,6 +22,8 @@ export class BackgroundModule extends Module {
            col_middle:-1,
            col_end:-1,
            iterations:10,
+           i_time:15,
+           id_killer:0,           
            grad:0,
            isTransition:false,
            isModalDialog:false,
@@ -30,6 +31,7 @@ export class BackgroundModule extends Module {
         }
 
         this.message_container=null
+        this.#bgcolors=[...Utils.AppSettings.bgcolors]
 
         this.type = type
         this.text = text
@@ -37,15 +39,20 @@ export class BackgroundModule extends Module {
 
       reset() {
 
-        this.message_container.remove() 
+        if (this.state.id_killer!=0) clearTimeout(this.state.id_killer)
+
+        if (this.message_container) this.message_container.remove() 
         document.body.ontransitionend=null
         document.body.onanimationend=null
         document.body.style.backgroundColor=document.body.style.background=document.body.style.backgroundSize=document.body.style.animation=''
+
         this.state= {
           col_start:-1,
           col_middle:-1,
           col_end:-1,
           iterations:10,
+          i_time:15,
+          id_killer:0,
           grad:0,
           isModalDialog:false,
           isTransition:false,
@@ -61,9 +68,10 @@ export class BackgroundModule extends Module {
            this.state.isRunning=true
 
            document.body.insertAdjacentHTML('beforeend', `<div class='message_container'><h2>Текущая итерация модуля: ${this.state.iterations} из 10</h2>
-                                                                                       <h2>Время анимации для итерации: 15 сек</h2></div>`)
+                                                                                         <h2>Время анимации итерации: ${this.state.i_time} сек</h2></div>`)
            
            this.message_container=document.body.querySelector('.message_container')
+
            this.set_new_iteration()
            document.body.onanimationiteration=function (event){
                 this.state.iterations-=1
@@ -79,7 +87,7 @@ export class BackgroundModule extends Module {
                   popup.openModal({ right:'',
                                     top:'50%',
                                     left:'50%',
-                                    transform: 'translate(-50%,-50%) scale(1.35)',
+                                    transform: 'translate(-50%,-50%) scale(1.2)',
                                     transition:`opacity 0.5s ease-in-out 0.5s`,
                                     opacity:1,                                
                                     textCaption: 'Сообщение от BGCOLOR',
@@ -98,21 +106,27 @@ export class BackgroundModule extends Module {
                 
                 document.body.style.background=`linear-gradient(${this.state.grad}deg, ${this.#bgcolors[this.state.col_start]}, ${this.#bgcolors[this.state.col_middle]}, ${this.#bgcolors[this.state.col_end]})`
                 document.body.style.backgroundSize='400% 400%'
-                document.body.style.animation='gradient 10s ease-in infinite'
+                document.body.style.animation='gradient 15s ease-in infinite'
 
              }
            }.bind(this)
+
+           this.state.id_killer=setInterval(function () { if (this.state.i_time>0) {
+                                                              this.state.i_time-=1
+                                                              this.message_container.lastChild.innerHTML=`Время анимации итерации: ${this.state.i_time} сек`
+                                                          } 
+                                                        }.bind(this),1000)
+
         }
            
       }
 
       set_new_iteration() {
 
+        this.state.i_time=16
         let new_bgelem=-1
-        while (new_bgelem===this.state.col_start || new_bgelem<0) {
-          new_bgelem=Utils.random(0,this.#bgcolors.length-1)
-         }
-         this.state.col_start=new_bgelem
+
+         this.state.col_start=Utils.random(0,this.#bgcolors.length-1)
 
          new_bgelem=-1
          while (new_bgelem===this.state.col_start || new_bgelem===this.state.col_middle || new_bgelem<0) {
@@ -129,8 +143,8 @@ export class BackgroundModule extends Module {
          this.state.grad=parseInt(Utils.random(-90,90))
 
          this.state.isTransition=true   
-         document.body.style.background=this.#bgcolors[this.state.col_start]
-         document.body.style.backgroundSize=document.body.style.animation=''
+         document.body.style.background=document.body.style.backgroundSize=document.body.style.animation=''
+         document.body.style.backgroundColor=this.#bgcolors[this.state.col_start]
 
            
         }

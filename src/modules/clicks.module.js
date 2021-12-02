@@ -15,7 +15,7 @@ export class ClicksModule extends Module {
           clicks:0,
           winClicks:0,
           seconds:20,
-          mtimer:0,
+          id_killer:0,
           isModalDialog:false,
           isRunning: false 
        }
@@ -28,15 +28,15 @@ export class ClicksModule extends Module {
 
       reset() {
        // if (document.querySelector('.message_container'))
-        this.message_container.remove() 
+        if (this.message_container) this.message_container.remove() 
         document.body.onclick=null
 
-        if (this.state.mtimer!=0) clearTimeout(this.state.mtimer)
+        if (this.state.id_killer!=0) clearTimeout(this.state.id_killer)
         this.state= {
           clicks:0,
-          winClicks:0,
+          winClicks:this.state.winClicks,
           seconds:20,
-          mtimer:0,
+          id_killer:0,
           isModalDialog:false,
           isRunning: false 
        }
@@ -62,8 +62,8 @@ export class ClicksModule extends Module {
             }
           }
 
-          if (this.state.mtimer===0 && this.state.isRunning) 
-          this.state.mtimer=setInterval(()=>{
+          if (this.state.id_killer===0 && this.state.isRunning) 
+          this.state.id_killer=setInterval(()=>{
             this.state.seconds-=1
             if (this.message_container) {
                this.message_container.firstChild.textContent=`Пользователь нажал на мышь: ${this.state.clicks} раз`
@@ -71,8 +71,8 @@ export class ClicksModule extends Module {
             }
             if (this.state.seconds<1) {
               this.state.isRunning=false
-              clearTimeout(this.state.mtimer)
-              this.state.mtimer=0
+              clearTimeout(this.state.id_killer)
+              this.state.id_killer=0
 
               if (this.state.winClicks<this.state.clicks && this.state.winClicks>0)
                  user_message=`Поздавляю, вы установили новый рекорд модуля: <i><b>${this.state.clicks}</b></i> кликов.`
@@ -91,7 +91,7 @@ export class ClicksModule extends Module {
                                      top:'80%',
                                      right:'100px',
                                      transition:`transform 1s ease-out 1s, opacity 2s ease-in-out 0.5s`,
-                                     transform: 'translate(0,-200%) scale(1.25)',
+                                     transform: 'scale(0.8) translate(0,-200%) scale(1.2)',
                                      opacity:1,                                
                                      textCaption: 'Сообщение модуля CLICKS',
                                      textMessage: `${user_message}
@@ -101,20 +101,27 @@ export class ClicksModule extends Module {
                                   },1)
               else {
                   this.state.isModalDialog=true
+                  console.log(popup.contextMenu)
+                  if (popup.contextMenu && popup.contextMenu.state.isOpening) popup.contextMenu.close()
                   // Запускаем всплыющее окно сообщений с уведомлением о завершении работы модуля CLICKS
                   popup.openModal({ right:'',
                                     top:'50%',
                                     left:'50%',
-                                    transform: 'translate(-50%,-50%) scale(1.25)',
+                                    transform: 'scale(0.8) translate(-50%,-50%) scale(1.2)',
                                     transition:`opacity 0.5s ease-in-out 0.5s`,
                                     opacity:1,                                
                                     textCaption: 'Сообщение модуля CLICKS',
                                     textMessage: `${user_message}
                                                   При должном старании позже вы сможете улучшить свои результаты и поставить новый рекорд!`
 
-                }, function(){this.state.isModalDialog=false; this.state.winClicks=this.state.clicks}.bind(this))              
+                }, function(){this.state.isModalDialog=false; }.bind(this))              
               }
-               
+              
+              if (this.state.winClicks===0) 
+                 this.state.winClicks=this.state.clicks
+              else if (this.state.winClicks<this.state.clicks) 
+                this.state.winClicks=this.state.clicks
+              
               this.state.clicks=0
             }
           },1000)

@@ -14,6 +14,7 @@ export class DialogMessage {
 
       this.buttonClose=buttonClose
       this.transitionPopup=transitionPopup
+      this.contextMenu=null
 
       if (!document.body.querySelector('#overlay')) {
         document.body.insertAdjacentHTML('beforeend',       

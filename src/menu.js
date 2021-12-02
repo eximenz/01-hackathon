@@ -11,6 +11,8 @@ export class ContextMenu extends Menu {
      this.activeModule=null
      this.messageDialog=new DialogMessage()
 
+     this.messageDialog.contextMenu=this
+
      this.state={ 
                   width:150,
                   height:0,
@@ -23,7 +25,7 @@ export class ContextMenu extends Menu {
         event.preventDefault()
 
         if (event.propertyName==='opacity' && event.target.tagName==='UL') {
-            this.state.isOpening=false
+         if (this.el.style.opacity===0) this.state.isOpening=false
         }
         console.log(event.propertyName, event.target.tagName, this.state.isOpening)
      })
