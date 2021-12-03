@@ -79,9 +79,7 @@ export class ShapeModule extends Module {
                                                                        this.state.isCreated && !this.state.isModalDialog) {
                                                                        this.shapeObj.style.opacity=0.4
                                                                        this.shapeObj.style.borderColor='#817a7a'
-                                                                    } else {
-                                                                      //this.shapeObj.style.opacity=1
-                                                                      this.shapeObj.style.borderColor='whitesmoke'
+                                                                       this.shapeObj.style.transform=`scale(1.5) rotate(${this.state.cur_rotation}deg) translate(${this.state.cur_position[1]}px, ${this.state.cur_position[0]}px)`
                                                                     }
                                                                   }.bind(this))
 
@@ -89,6 +87,7 @@ export class ShapeModule extends Module {
                                                                        this.state.isCreated && !this.state.isModalDialog) {
                                                                        this.shapeObj.style.opacity=1
                                                                        this.shapeObj.style.borderColor='whitesmoke'
+                                                                       this.shapeObj.style.transform=`scale(${this.state.cur_scale}) rotate(${this.state.cur_rotation}deg) translate(${this.state.cur_position[1]}px, ${this.state.cur_position[0]}px)`                                                                       
                                                                     }
                                                                   }.bind(this))
 
@@ -243,17 +242,17 @@ export class ShapeModule extends Module {
           //this.shapeObj.style.left= `${parseInt(this.shapeObj.style.left)+tr_param}px`
           this.state.cur_position[1]+=tr_param
         }
-
-        this.shapeObj.style.transform=`rotate(${this.state.cur_rotation}deg) translate(${this.state.cur_position[1]}px, ${this.state.cur_position[0]}px)`
+        this.shapeObj.style.transform=`scale(${this.state.cur_scale}) rotate(${this.state.cur_rotation}deg) translate(${this.state.cur_position[1]}px, ${this.state.cur_position[0]}px)`
       }
 
       destroy_shape() {
         if (this.state.isRunning && this.shapeObj) {
           this.state.isDestroy=true
           this.state.isCreated=false
+         
           if (!this.shapeObj.classList.contains('destroy')) this.shapeObj.classList.toggle('destroy')
 
-          this.shapeObj.style.transform=`rotate(${360*Utils.random(2,5)*(Utils.random(0,10)<=5?(-1):1)}deg) scale(${this.state.cur_scale}) translate(${Utils.random(-80,80)}px, ${Utils.random(-200,200)}px) scale(${Utils.random(3,5)})`
+          this.shapeObj.style.transform=`scale(${Utils.random(1,2)}) rotate(${360*parseInt(Utils.random(2,5))*(Utils.random(0,10)<=5?-1:1)}deg) translate(${Utils.random(-100,100)}px, ${Utils.random(-100,100)}px)`
           this.shapeObj.style.opacity=0
           this.shapeObj.style.borderRadius=0
           this.shapeObj.style.borderWidth=`20px`
