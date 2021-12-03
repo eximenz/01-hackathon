@@ -12,7 +12,7 @@ class App {
     }
 
     run() {
-      this.contextmenu.add(new BackgroundModule('background','Модуль BACKGROUND'))
+      this.contextmenu.add(new BackgroundModule('background','Модуль BACKGND'))
       this.contextmenu.add(new ClicksModule('clicks',' Модуль CLICKS'))
       this.contextmenu.add(new ShapeModule('shape','Модуль SHAPES'))
 
