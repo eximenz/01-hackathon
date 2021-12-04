@@ -91,14 +91,30 @@ export class ShapeModule extends Module {
                                                                     }
                                                                   }.bind(this))
 
+          this.shapeObj.addEventListener('click', function() {if (this.state.isRunning && !this.state.isDestroy && 
+                                                                    this.state.isCreated) {
+                                                                      console.log(this.state.iterations,'Количество итераций')
+                                                                      if (this.state.iterations>0) {
+                                                                         this.state.iterations-=1
+                                                                         this.state.i_time=16
+                                                                       } else {
+                                                                            this.state.i_time=0
+                                                                            this.message_container.lastChild.innerHTML=`Время анимации для фигуры: ${this.state.i_time} сек`   
+                                                                          } 
+                                                                      
+                                                                      this.destroy_shape() 
+                                                                   }
+                                                               }.bind(this))
+
           if (this.state.id_killer===0) this.state.id_killer=setInterval(function () { if (!this.state.isRunning || this.state.isModalDialog || !this.state.isCreated) return
                                                                                        if (this.state.i_time>0) {
                                                                                          this.state.i_time-=1
+                                                                                         if (this.state.i_time===15) this.message_container.firstChild.innerHTML=`Текущая фигура: ${(this.state.iterations>0?11-this.state.iterations:10)} из 10`
                                                                                          this.message_container.lastChild.innerHTML=`Время анимации для фигуры: ${this.state.i_time} сек`
                                                                                         } else if (this.state.iterations>0) {
                                                                                                    this.state.iterations-=1
                                                                                                    this.state.i_time=16
-                                                                                                   this.message_container.firstChild.innerHTML=`Текущая фигура: ${(this.state.iterations>0?11-this.state.iterations:10)} из 10`
+                                                                                                   //this.message_container.firstChild.innerHTML=`Текущая фигура: ${(this.state.iterations>0?11-this.state.iterations:10)} из 10`
                                                                                                    this.destroy_shape() 
                                                                                           } else {
                                                                                             // Время анимации для последней фигуры подошло к концу, необходимо уничтожить текущую фигуру и показать модальный диалог
@@ -252,7 +268,7 @@ export class ShapeModule extends Module {
          
           if (!this.shapeObj.classList.contains('destroy')) this.shapeObj.classList.toggle('destroy')
 
-          this.shapeObj.style.transform=`scale(${Utils.random(1,2)}) rotate(${360*parseInt(Utils.random(2,5))*(Utils.random(0,10)<=5?-1:1)}deg) translate(${Utils.random(-100,100)}px, ${Utils.random(-100,100)}px)`
+          this.shapeObj.style.transform=`scale(${Utils.random(3,5)}) rotate(${360*parseInt(Utils.random(2,5))*(Utils.random(0,10)<=5?-1:1)}deg) translate(${Utils.random(-100,100)}px, ${Utils.random(-100,100)}px)`
           this.shapeObj.style.opacity=0
           this.shapeObj.style.borderRadius=0
           this.shapeObj.style.borderWidth=`20px`
