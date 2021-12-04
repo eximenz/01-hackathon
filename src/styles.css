@@ -115,9 +115,10 @@ body {
 }
 
 .shape-bug.destroy {
-    transform-origin: center center;
-    transition: transform 3.5s ease-in, opacity 5s ease-out 0.5s, border 3s ease-out 0.2s;
-  }
+    
+    transition: transform-origin 0s linear, transform 3.5s ease-in, opacity 5s ease-out 0.5s, border 3s ease-out 0.2s;
+    transform-origin: center center;  
+}
   
   .shape-bug:hover {
       opacity:0.5;

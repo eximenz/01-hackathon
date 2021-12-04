@@ -202,7 +202,7 @@ export class ShapeModule extends Module {
           if (parseInt(this.shapeObj.style.top)+parseInt(this.shapeObj.style.height)>document.body.clientHeight-50) this.shapeObj.style.top= `${parseInt(this.shapeObj.style.top)-50}px`
           if (parseInt(this.shapeObj.style.left)+parseInt(this.shapeObj.style.width)>document.body.clientWidth-50) this.shapeObj.style.left= `${parseInt(this.shapeObj.style.left)-50}px`          
          
-          this.shapeObj.style.transition='transform 1.5s ease-in-out, opacity 3.5s ease, border-radius 1s ease-out'
+          this.shapeObj.style.transition='transform 1.5s ease-in-out, opacity 3.5s ease, border-radius 1s ease-out '
           this.shapeObj.style.opacity=1
 
           this.make_transform()
@@ -270,6 +270,7 @@ export class ShapeModule extends Module {
 
           this.shapeObj.style.transform=`scale(${Utils.random(3,5)}) rotate(${360*parseInt(Utils.random(2,5))*(Utils.random(0,10)<=5?-1:1)}deg) translate(${Utils.random(-100,100)}px, ${Utils.random(-100,100)}px)`
           this.shapeObj.style.opacity=0
+          this.shapeObj.style.transformOrigin='center center'
           this.shapeObj.style.borderRadius=0
           this.shapeObj.style.borderWidth=`20px`
 
