@@ -34,7 +34,7 @@ export class ShapeModule extends Module {
         this.shapeObj=null
         this.message_container=null
 
-        this.type = type
+        this.type = type 
         this.text = text
       }
 
